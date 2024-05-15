@@ -27,18 +27,16 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.D))
         {
             rb.velocity = new Vector2(Speed, rb.velocity.y);
-            transform.localScale = new Vector3(1, 1, 1);
         }
 
         if (Input.GetKey(KeyCode.A))
         {
             rb.velocity = new Vector2(-Speed, rb.velocity.y);
-            transform.localScale = new Vector3(-1, 1, 1);
         }
 
         if (Input.GetKey(KeyCode.Space) && IsGrounded)
         {
-            
+
             rb.velocity = new Vector2(rb.velocity.x, JumpForce);
         }
 
@@ -53,5 +51,5 @@ public class PlayerMovement : MonoBehaviour
         IsGrounded = Physics2D.OverlapArea(Point1.position, Point2.position, Ground);
     }
 
-    
+
 }
