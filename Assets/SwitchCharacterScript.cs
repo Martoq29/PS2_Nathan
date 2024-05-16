@@ -6,8 +6,8 @@ public class SwitchCharacterScript : MonoBehaviour
 {
 
 
-    public GameObject avatar1, avatar2;
 
+    public GameObject avatar1, avatar2;
 
     int whichAvatarIsOn = 1;
 
@@ -63,6 +63,7 @@ public class SwitchCharacterScript : MonoBehaviour
     void Update()
     {
 
+
         if (Input.GetKeyDown(KeyCode.W))
         {
             SwitchAvatar();
@@ -77,6 +78,8 @@ public class SwitchCharacterScript : MonoBehaviour
         {
             MoveAvatar(avatar2);
         }
+
+
     }
 
 
@@ -90,4 +93,10 @@ public class SwitchCharacterScript : MonoBehaviour
 
         avatar.transform.Translate(movement * currentSpeed * Time.deltaTime, Space.World);
     }
+    public bool IsAvatar2Active()
+    {
+        return whichAvatarIsOn == 2;
+    }
+
+
 }

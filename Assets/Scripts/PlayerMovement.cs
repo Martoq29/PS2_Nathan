@@ -14,6 +14,13 @@ public class PlayerMovement : MonoBehaviour
     public Transform Point2;
     public LayerMask Ground;
     private bool IsGrounded;
+    private bool canDash = true;
+    private bool isDashing;
+    private float dashingPower = 24f;
+    private float dashingTime = 0.2f;
+    private float dashingCooldown = 1f;
+
+    [SerializeField] private TrailRenderer tr;
 
     void Start()
     {
@@ -22,6 +29,11 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+
+        if (isDashing)
+        {
+            return;
+        }
         GroundIsTouch();
 
         if (Input.GetKey(KeyCode.D))
@@ -44,12 +56,31 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.velocity = new Vector2(0, rb.velocity.y);
         }
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
+        {
+            StartCoroutine(Dash());
+        }
+
     }
 
     void GroundIsTouch()
     {
         IsGrounded = Physics2D.OverlapArea(Point1.position, Point2.position, Ground);
     }
-
+    private IEnumerator Dash()
+    {
+        canDash = false;
+        isDashing = true;
+        float originalGravity = rb.gravityScale;
+        rb.gravityScale = 0f;
+        rb.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
+        tr.emitting = true;
+        yield return new WaitForSeconds(dashingTime);
+        tr.emitting = false;
+        rb.gravityScale = originalGravity;
+        isDashing = false;
+        yield return new WaitForSeconds(dashingCooldown);
+        canDash = true;
+    }
 
 }
