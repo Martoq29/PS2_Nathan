@@ -31,6 +31,8 @@ public class Abilities : MonoBehaviour
     // Référence au composant de santé du joueur
     public PlayerHealth playerHealth;
 
+    public bool isPlayer2; // Variable pour indiquer si le joueur actif est le joueur 2
+
     void Start()
     {
         healImage.fillAmount = 0;
@@ -41,9 +43,18 @@ public class Abilities : MonoBehaviour
 
     void Update()
     {
-        HandleHealAbility();
-        HandleShootAbility();
-        HandleShieldAbility();
+        if (!isPlayer2)
+        {
+            HandleHealAbility();
+            HandleShootAbility();
+            HandleShieldAbility();
+        }
+        else
+        {
+            Destroy(healImage.gameObject);
+            Destroy(shootImage.gameObject);
+            Destroy(shieldImage.gameObject);
+        }
     }
 
     void HandleHealAbility()
@@ -53,7 +64,6 @@ public class Abilities : MonoBehaviour
             isHealCooldown = true;
             healImage.fillAmount = 1;
 
-            // Supposons que vous avez un script PlayerHealth avec une méthode Heal
             playerHealth.Heal(healAmount);
         }
 
@@ -76,7 +86,6 @@ public class Abilities : MonoBehaviour
             isShootCooldown = true;
             shootImage.fillAmount = 1;
 
-            // Instancie la balle au point de spawn
             Instantiate(bullet, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
         }
 
@@ -99,7 +108,6 @@ public class Abilities : MonoBehaviour
             isShieldCooldown = true;
             shieldImage.fillAmount = 1;
 
-            // Active le bouclier sur le joueur
             playerMovement.ActivateShield(shieldDuration);
         }
 

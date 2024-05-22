@@ -3,19 +3,19 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public int maxHealth = 100;
-    public int health;
+    public static int maxHealth = 100;
+    public static int currentHealth;
     public Image healthBar;
 
     void Start()
     {
-        health = maxHealth;
+        currentHealth = maxHealth;
     }
 
     public void TakeDamage(int damage)
     {
-        health -= damage;
-        if (health <= 0)
+        currentHealth -= damage;
+        if (currentHealth <= 0)
         {
             Destroy(gameObject);
         }
@@ -23,17 +23,13 @@ public class PlayerHealth : MonoBehaviour
 
     public void Heal(int healAmount)
     {
-        health += healAmount;
-        if (health > maxHealth)
-        {
-            health = maxHealth;
-        }
-
+        currentHealth += healAmount;
+        currentHealth = Mathf.Min(currentHealth, maxHealth);
     }
+
     void Update()
     {
-        healthBar.fillAmount = Mathf.Clamp((float)health / maxHealth, 0, 1);
-
+        
+        healthBar.fillAmount = Mathf.Clamp01((float)currentHealth / maxHealth);
     }
-
 }

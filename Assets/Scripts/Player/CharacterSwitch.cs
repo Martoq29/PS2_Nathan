@@ -2,26 +2,37 @@ using UnityEngine;
 
 public class CharacterSwitch : MonoBehaviour
 {
-    public GameObject player1; // Référence au premier personnage
-    public GameObject player2; // Référence au deuxième personnage
-    public CameraFollow cameraFollow; // Référence au script de suivi de la caméra
+    public GameObject player1;
+    public GameObject player2;
+    public CameraFollow cameraFollow;
 
-    private GameObject activePlayer; // Référence au personnage actuellement actif
+    public GameObject player1AbilitiesUI;
+    public GameObject player2AbilitiesUI;
+
+    private GameObject activePlayer;
 
     void Start()
     {
-        // Initialiser le premier personnage comme actif
+        
         activePlayer = player1;
         player1.SetActive(true);
         player2.SetActive(false);
 
-        // Initialiser la cible de la caméra
+        
         cameraFollow.target = player1.transform;
+
+        
+        player1AbilitiesUI.SetActive(true);
+        player2AbilitiesUI.SetActive(false);
+
+        
+        player1.GetComponent<Abilities>().isPlayer2 = false;
+        player2.GetComponent<Abilities>().isPlayer2 = true;
     }
 
     void Update()
     {
-        // Vérifier si la touche "X" est pressée
+        
         if (Input.GetKeyDown(KeyCode.X))
         {
             SwitchCharacter();
@@ -30,10 +41,10 @@ public class CharacterSwitch : MonoBehaviour
 
     void SwitchCharacter()
     {
-        // Sauvegarder la position de l'actif actuel
+        
         Vector3 currentPosition = activePlayer.transform.position;
 
-        // Changer l'état actif des personnages et mettre à jour leur position
+        
         if (activePlayer == player1)
         {
             activePlayer = player2;
@@ -41,8 +52,16 @@ public class CharacterSwitch : MonoBehaviour
             player2.transform.position = currentPosition;
             player2.SetActive(true);
 
-            // Mettre à jour la cible de la caméra
+            
             cameraFollow.target = player2.transform;
+
+            
+            player1AbilitiesUI.SetActive(false);
+            player2AbilitiesUI.SetActive(true);
+
+            
+            player1.GetComponent<Abilities>().isPlayer2 = true;
+            player2.GetComponent<Abilities>().isPlayer2 = false;
         }
         else
         {
@@ -51,8 +70,16 @@ public class CharacterSwitch : MonoBehaviour
             player1.transform.position = currentPosition;
             player1.SetActive(true);
 
-            // Mettre à jour la cible de la caméra
+            
             cameraFollow.target = player1.transform;
+
+            
+            player1AbilitiesUI.SetActive(true);
+            player2AbilitiesUI.SetActive(false);
+
+            
+            player1.GetComponent<Abilities>().isPlayer2 = false;
+            player2.GetComponent<Abilities>().isPlayer2 = true;
         }
     }
 }
