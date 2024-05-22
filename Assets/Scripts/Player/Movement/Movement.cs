@@ -8,10 +8,21 @@ public class Movement : MonoBehaviour
     private float speed = 8f;
     private float jumpingPower = 16f;
     private bool isFacingRight = true;
+    private bool isShielded = false; // Flag to indicate if the player is shielded
+
+    [SerializeField]
+    private GameObject shield;
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
+
+    private PlayerHealth playerHealth; // Reference to the PlayerHealth component
+
+    void Start()
+    {
+        playerHealth = GetComponent<PlayerHealth>(); // Assign the PlayerHealth component
+    }
 
     void Update()
     {
@@ -28,6 +39,27 @@ public class Movement : MonoBehaviour
         }
 
         Flip();
+    }
+
+    public void ActivateShield(float duration)
+    {
+        if (!isShielded)
+        {
+            StartCoroutine(ShieldRoutine(duration));
+        }
+    }
+
+    private IEnumerator ShieldRoutine(float duration)
+    {
+        isShielded = true;
+        shield.SetActive(true);
+        Debug.Log("Shield activated.");
+
+        yield return new WaitForSeconds(duration);
+
+        shield.SetActive(false);
+        isShielded = false;
+        Debug.Log("Shield deactivated.");
     }
 
     private void FixedUpdate()
@@ -50,4 +82,24 @@ public class Movement : MonoBehaviour
             transform.localScale = localScale;
         }
     }
+
+    public void TakeDamage(int damage)
+    {
+        if (!isShielded)
+        {
+            // Apply damage to the player's health
+            playerHealth.TakeDamage(damage);
+        }
+        else
+        {
+            Debug.Log("Shield active, no damage taken.");
+        }
+    }
+
+    public bool IsShielded() // Method to check if the player is shielded
+    {
+        return isShielded;
+    }
+
+
 }

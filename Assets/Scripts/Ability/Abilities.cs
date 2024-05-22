@@ -13,36 +13,47 @@ public class Abilities : MonoBehaviour
     private bool isHealCooldown = false;
 
     [Header("Shoot Ability")]
-    public KeyCode shootKey = KeyCode.W;
+    public KeyCode shootKey = KeyCode.Mouse0; // Utilise le clic gauche de la souris pour tirer
     public GameObject bullet;
     public Transform bulletSpawnPoint;
     public float shootCooldown = 5f;
     public Image shootImage;
     private bool isShootCooldown = false;
 
-    // Reference to the player's health component
+    [Header("Shield Ability")]
+    public KeyCode shieldKey = KeyCode.E;
+    public float shieldDuration = 3f;
+    public float shieldCooldown = 10f;
+    public Image shieldImage;
+    private bool isShieldCooldown = false;
+    private Movement playerMovement;
+
+    // Référence au composant de santé du joueur
     public PlayerHealth playerHealth;
 
     void Start()
     {
         healImage.fillAmount = 0;
         shootImage.fillAmount = 0;
+        shieldImage.fillAmount = 0;
+        playerMovement = GetComponent<Movement>();
     }
 
     void Update()
     {
         HandleHealAbility();
         HandleShootAbility();
+        HandleShieldAbility();
     }
 
     void HandleHealAbility()
     {
-        if (Input.GetKey(healKey) && !isHealCooldown)
+        if (Input.GetKeyDown(healKey) && !isHealCooldown)
         {
             isHealCooldown = true;
             healImage.fillAmount = 1;
 
-            // Assuming you have a PlayerHealth script with a Heal method
+            // Supposons que vous avez un script PlayerHealth avec une méthode Heal
             playerHealth.Heal(healAmount);
         }
 
@@ -60,12 +71,12 @@ public class Abilities : MonoBehaviour
 
     void HandleShootAbility()
     {
-        if (Input.GetKey(shootKey) && !isShootCooldown)
+        if (Input.GetKeyDown(shootKey) && !isShootCooldown)
         {
             isShootCooldown = true;
             shootImage.fillAmount = 1;
 
-            // Instantiate the bullet at the spawn point
+            // Instancie la balle au point de spawn
             Instantiate(bullet, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
         }
 
@@ -77,6 +88,29 @@ public class Abilities : MonoBehaviour
             {
                 shootImage.fillAmount = 0;
                 isShootCooldown = false;
+            }
+        }
+    }
+
+    void HandleShieldAbility()
+    {
+        if (Input.GetKeyDown(shieldKey) && !isShieldCooldown)
+        {
+            isShieldCooldown = true;
+            shieldImage.fillAmount = 1;
+
+            // Active le bouclier sur le joueur
+            playerMovement.ActivateShield(shieldDuration);
+        }
+
+        if (isShieldCooldown)
+        {
+            shieldImage.fillAmount -= 1 / shieldCooldown * Time.deltaTime;
+
+            if (shieldImage.fillAmount <= 0)
+            {
+                shieldImage.fillAmount = 0;
+                isShieldCooldown = false;
             }
         }
     }
