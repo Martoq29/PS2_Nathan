@@ -3,41 +3,43 @@ using UnityEngine.UI;
 
 public class Abilities2 : MonoBehaviour
 {
-
-    [Header("Knockback Ability")]
-    public KeyCode knockbackKey = KeyCode.Mouse0;
-    public float knockbackCooldown = 5f;
-    public Image knockbackImage;
-    private bool isKnockbackCooldown = false;
-
+    [Header("Shooting Ability")]
+    public Transform shootingPoint;
+    public GameObject bulletPrefab;
+    public KeyCode shootKey = KeyCode.Mouse0;  // Left mouse button
+    public float shootCooldown = 1f;
+    public Image shootImage;
+    private bool isShootCooldown = false;
+    public float bulletLifetime = 3f; // Lifetime of the bullet in seconds
 
     void Start()
     {
-        knockbackImage.fillAmount = 0;
+        shootImage.fillAmount = 0;
     }
 
     void Update()
     {
-        HandleKnockbackAbility();
+        HandleShootingAbility();
     }
 
-    void HandleKnockbackAbility()
+    void HandleShootingAbility()
     {
-        if (Input.GetKeyDown(knockbackKey) && !isKnockbackCooldown)
+        if (Input.GetKeyDown(shootKey) && !isShootCooldown)
         {
-            isKnockbackCooldown = true;
-            knockbackImage.fillAmount = 1;
-
+            isShootCooldown = true;
+            shootImage.fillAmount = 1;
+            GameObject bullet = Instantiate(bulletPrefab, shootingPoint.position, shootingPoint.rotation);
+            Destroy(bullet, bulletLifetime); // Destroy the bullet after bulletLifetime seconds
         }
 
-        if (isKnockbackCooldown)
+        if (isShootCooldown)
         {
-            knockbackImage.fillAmount -= 1 / knockbackCooldown * Time.deltaTime;
+            shootImage.fillAmount -= 1 / shootCooldown * Time.deltaTime;
 
-            if (knockbackImage.fillAmount <= 0)
+            if (shootImage.fillAmount <= 0)
             {
-                knockbackImage.fillAmount = 0;
-                isKnockbackCooldown = false;
+                shootImage.fillAmount = 0;
+                isShootCooldown = false;
             }
         }
     }

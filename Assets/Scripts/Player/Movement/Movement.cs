@@ -39,6 +39,12 @@ public class Movement : MonoBehaviour
         }
 
         Flip();
+
+        // Example: Activate shield for 3 seconds when pressing the "S" key
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            ActivateShield(3f);
+        }
     }
 
     public void ActivateShield(float duration)
@@ -74,12 +80,12 @@ public class Movement : MonoBehaviour
 
     private void Flip()
     {
-        if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
+        if ((isFacingRight && horizontal < 0f) || (!isFacingRight && horizontal > 0f))
         {
             isFacingRight = !isFacingRight;
-            Vector3 localScale = transform.localScale;
-            localScale.x *= -1f;
-            transform.localScale = localScale;
+            Vector3 rotation = transform.eulerAngles;
+            rotation.y += 180f;
+            transform.eulerAngles = rotation;
         }
     }
 
@@ -100,6 +106,4 @@ public class Movement : MonoBehaviour
     {
         return isShielded;
     }
-
-
 }
