@@ -13,26 +13,21 @@ public class CharacterSwitch : MonoBehaviour
 
     void Start()
     {
-        
         activePlayer = player1;
         player1.SetActive(true);
         player2.SetActive(false);
 
-        
         cameraFollow.target = player1.transform;
 
-        
         player1AbilitiesUI.SetActive(true);
         player2AbilitiesUI.SetActive(false);
 
-        
-        player1.GetComponent<Abilities>().isPlayer2 = false;
-        player2.GetComponent<Abilities>().isPlayer2 = true;
+        SetPlayer2State(player1, false);
+        SetPlayer2State(player2, true);
     }
 
     void Update()
     {
-        
         if (Input.GetKeyDown(KeyCode.X))
         {
             SwitchCharacter();
@@ -41,10 +36,8 @@ public class CharacterSwitch : MonoBehaviour
 
     void SwitchCharacter()
     {
-        
         Vector3 currentPosition = activePlayer.transform.position;
 
-        
         if (activePlayer == player1)
         {
             activePlayer = player2;
@@ -52,16 +45,13 @@ public class CharacterSwitch : MonoBehaviour
             player2.transform.position = currentPosition;
             player2.SetActive(true);
 
-            
             cameraFollow.target = player2.transform;
 
-            
             player1AbilitiesUI.SetActive(false);
             player2AbilitiesUI.SetActive(true);
 
-            
-            player1.GetComponent<Abilities>().isPlayer2 = true;
-            player2.GetComponent<Abilities>().isPlayer2 = false;
+            SetPlayer2State(player1, true);
+            SetPlayer2State(player2, false);
         }
         else
         {
@@ -70,16 +60,26 @@ public class CharacterSwitch : MonoBehaviour
             player1.transform.position = currentPosition;
             player1.SetActive(true);
 
-            
             cameraFollow.target = player1.transform;
 
-            
             player1AbilitiesUI.SetActive(true);
             player2AbilitiesUI.SetActive(false);
 
-            
-            player1.GetComponent<Abilities>().isPlayer2 = false;
-            player2.GetComponent<Abilities>().isPlayer2 = true;
+            SetPlayer2State(player1, false);
+            SetPlayer2State(player2, true);
+        }
+    }
+
+    void SetPlayer2State(GameObject player, bool state)
+    {
+        Abilities abilities = player.GetComponent<Abilities>();
+        if (abilities != null)
+        {
+            abilities.isPlayer2 = state;
+        }
+        else
+        {
+            Debug.LogWarning("Abilities component not found on player: " + player.name);
         }
     }
 }

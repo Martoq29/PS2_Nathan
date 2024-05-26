@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,29 +9,30 @@ public class Movement : MonoBehaviour
     private float speed = 8f;
     private float jumpingPower = 16f;
     private bool isFacingRight = true;
-    private bool isShielded = false; // Flag to indicate if the player is shielded
-
-    [SerializeField]
-    private GameObject shield;
+    private bool isGrounded = false;
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
 
+    private Animator animator;
     private PlayerHealth playerHealth; // Reference to the PlayerHealth component
 
     void Start()
     {
         playerHealth = GetComponent<PlayerHealth>(); // Assign the PlayerHealth component
+        animator = GetComponent<Animator>();
     }
 
     void Update()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
 
-        if (Input.GetButtonDown("Jump") && IsGrounded())
+        if (Input.GetButtonDown("Jump") && CheckIfGrounded())
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+            isGrounded = false;
+            animator.SetBool("isJumping", !isGrounded);
         }
 
         if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
@@ -39,41 +41,16 @@ public class Movement : MonoBehaviour
         }
 
         Flip();
-
-        // Example: Activate shield for 3 seconds when pressing the "S" key
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            ActivateShield(3f);
-        }
-    }
-
-    public void ActivateShield(float duration)
-    {
-        if (!isShielded)
-        {
-            StartCoroutine(ShieldRoutine(duration));
-        }
-    }
-
-    private IEnumerator ShieldRoutine(float duration)
-    {
-        isShielded = true;
-        shield.SetActive(true);
-        Debug.Log("Shield activated.");
-
-        yield return new WaitForSeconds(duration);
-
-        shield.SetActive(false);
-        isShielded = false;
-        Debug.Log("Shield deactivated.");
     }
 
     private void FixedUpdate()
     {
         rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
+        animator.SetFloat("xVelocity", Math.Abs(rb.velocity.x));
+        animator.SetFloat("yVelocity", rb.velocity.y);
     }
 
-    private bool IsGrounded()
+    private bool CheckIfGrounded()
     {
         return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
     }
@@ -89,21 +66,15 @@ public class Movement : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage) // Ensure this method is public
     {
-        if (!isShielded)
-        {
-            // Apply damage to the player's health
-            playerHealth.TakeDamage(damage);
-        }
-        else
-        {
-            Debug.Log("Shield active, no damage taken.");
-        }
+        // Apply damage to the player's health
+        playerHealth.TakeDamage(damage);
     }
 
-    public bool IsShielded() // Method to check if the player is shielded
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        return isShielded;
+        isGrounded = true;
+        animator.SetBool("isJumping", !isGrounded);
     }
 }

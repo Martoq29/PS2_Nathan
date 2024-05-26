@@ -12,9 +12,12 @@ public class Abilities2 : MonoBehaviour
     private bool isShootCooldown = false;
     public float bulletLifetime = 3f; // Lifetime of the bullet in seconds
 
+    private Animator animator;
+
     void Start()
     {
         shootImage.fillAmount = 0;
+        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -28,6 +31,10 @@ public class Abilities2 : MonoBehaviour
         {
             isShootCooldown = true;
             shootImage.fillAmount = 1;
+
+            // Trigger "Attack2" animation
+            animator.SetTrigger("Attack");
+
             GameObject bullet = Instantiate(bulletPrefab, shootingPoint.position, shootingPoint.rotation);
             Destroy(bullet, bulletLifetime); // Destroy the bullet after bulletLifetime seconds
         }

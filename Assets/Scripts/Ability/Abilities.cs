@@ -13,32 +13,23 @@ public class Abilities : MonoBehaviour
     private bool isHealCooldown = false;
 
     [Header("Shoot Ability")]
-    public KeyCode shootKey = KeyCode.Mouse0; // Utilise le clic gauche de la souris pour tirer
+    public KeyCode shootKey = KeyCode.Mouse0;
     public GameObject bullet;
     public Transform bulletSpawnPoint;
     public float shootCooldown = 5f;
     public Image shootImage;
     private bool isShootCooldown = false;
 
-    [Header("Shield Ability")]
-    public KeyCode shieldKey = KeyCode.E;
-    public float shieldDuration = 3f;
-    public float shieldCooldown = 10f;
-    public Image shieldImage;
-    private bool isShieldCooldown = false;
-    private Movement playerMovement;
-
-    // Référence au composant de santé du joueur
     public PlayerHealth playerHealth;
+    public bool isPlayer2;
 
-    public bool isPlayer2; // Variable pour indiquer si le joueur actif est le joueur 2
+    private Animator animator;
 
     void Start()
     {
         healImage.fillAmount = 0;
         shootImage.fillAmount = 0;
-        shieldImage.fillAmount = 0;
-        playerMovement = GetComponent<Movement>();
+        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -47,13 +38,18 @@ public class Abilities : MonoBehaviour
         {
             HandleHealAbility();
             HandleShootAbility();
-            HandleShieldAbility();
         }
         else
         {
             Destroy(healImage.gameObject);
             Destroy(shootImage.gameObject);
-            Destroy(shieldImage.gameObject);
+        }
+
+        // Ajoutez cette condition pour détecter la fin de l'animation d'attaque et revenir à l'état "Any State"
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack") && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
+        {
+            animator.ResetTrigger("Attack");
+            animator.SetTrigger("AnyState");
         }
     }
 
@@ -86,6 +82,9 @@ public class Abilities : MonoBehaviour
             isShootCooldown = true;
             shootImage.fillAmount = 1;
 
+            // Play attack animation
+            animator.SetTrigger("Attack");
+
             Instantiate(bullet, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
         }
 
@@ -99,27 +98,6 @@ public class Abilities : MonoBehaviour
                 isShootCooldown = false;
             }
         }
-    }
 
-    void HandleShieldAbility()
-    {
-        if (Input.GetKeyDown(shieldKey) && !isShieldCooldown)
-        {
-            isShieldCooldown = true;
-            shieldImage.fillAmount = 1;
-
-            playerMovement.ActivateShield(shieldDuration);
-        }
-
-        if (isShieldCooldown)
-        {
-            shieldImage.fillAmount -= 1 / shieldCooldown * Time.deltaTime;
-
-            if (shieldImage.fillAmount <= 0)
-            {
-                shieldImage.fillAmount = 0;
-                isShieldCooldown = false;
-            }
-        }
     }
 }
