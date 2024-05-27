@@ -14,6 +14,13 @@ public class Abilities2 : MonoBehaviour
 
     private Animator animator;
 
+    [Header("Heal Ability")] // New variables for Heal Ability
+    public KeyCode healKey = KeyCode.Q;
+    public int healAmount = 20;
+    public float healCooldown = 10f;
+    public Image healImage;
+    private bool isHealCooldown = false;
+
     void Start()
     {
         shootImage.fillAmount = 0;
@@ -23,6 +30,7 @@ public class Abilities2 : MonoBehaviour
     void Update()
     {
         HandleShootingAbility();
+        HandleHealAbility(); // Call HandleHealAbility in Update
     }
 
     void HandleShootingAbility()
@@ -47,6 +55,29 @@ public class Abilities2 : MonoBehaviour
             {
                 shootImage.fillAmount = 0;
                 isShootCooldown = false;
+            }
+        }
+    }
+
+    void HandleHealAbility() // New method for Heal Ability
+    {
+        if (Input.GetKeyDown(healKey) && !isHealCooldown)
+        {
+            isHealCooldown = true;
+            healImage.fillAmount = 1;
+
+            // Handle healing logic here
+            // Example: playerHealth.Heal(healAmount);
+        }
+
+        if (isHealCooldown)
+        {
+            healImage.fillAmount -= 1 / healCooldown * Time.deltaTime;
+
+            if (healImage.fillAmount <= 0)
+            {
+                healImage.fillAmount = 0;
+                isHealCooldown = false;
             }
         }
     }

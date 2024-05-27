@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,37 +18,23 @@ public class Abilities : MonoBehaviour
     public Image shootImage;
     private bool isShootCooldown = false;
 
-    public PlayerHealth playerHealth;
-    public bool isPlayer2;
-
+    [Header("Player Status")]
+    public bool isPlayer2 = false;
+    private PlayerHealth playerHealth;
     private Animator animator;
 
     void Start()
     {
         healImage.fillAmount = 0;
         shootImage.fillAmount = 0;
+        playerHealth = GetComponent<PlayerHealth>();
         animator = GetComponent<Animator>();
     }
 
     void Update()
     {
-        if (!isPlayer2)
-        {
-            HandleHealAbility();
-            HandleShootAbility();
-        }
-        else
-        {
-            Destroy(healImage.gameObject);
-            Destroy(shootImage.gameObject);
-        }
-
-        // Ajoutez cette condition pour détecter la fin de l'animation d'attaque et revenir à l'état "Any State"
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack") && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
-        {
-            animator.ResetTrigger("Attack");
-            animator.SetTrigger("AnyState");
-        }
+        HandleHealAbility();
+        HandleShootAbility();
     }
 
     void HandleHealAbility()
@@ -98,6 +82,5 @@ public class Abilities : MonoBehaviour
                 isShootCooldown = false;
             }
         }
-
     }
 }
