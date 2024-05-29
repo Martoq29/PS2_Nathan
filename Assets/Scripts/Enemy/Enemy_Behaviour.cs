@@ -20,13 +20,13 @@ public class Enemy_Behaviour : MonoBehaviour
     private bool cooling;
     private float intTimer;
 
-
     void Awake()
     {
         SelectTarget();
         intTimer = timer;
         anim = GetComponent<Animator>();
     }
+
     // Update is called once per frame
     void Update()
     {
@@ -40,14 +40,11 @@ public class Enemy_Behaviour : MonoBehaviour
             SelectTarget();
         }
 
-
         if (inRange)
         {
             EnemyLogic();
         }
     }
-
-
 
     void EnemyLogic()
     {
@@ -57,7 +54,7 @@ public class Enemy_Behaviour : MonoBehaviour
         {
             StopAttack();
         }
-        else if (attackDistance >= distance && cooling == false)
+        else if (attackDistance >= distance && !cooling)
         {
             Attack();
         }
@@ -76,9 +73,8 @@ public class Enemy_Behaviour : MonoBehaviour
             Vector2 targetPosition = new Vector2(target.position.x, transform.position.y);
             transform.position = Vector2.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
         }
-
-
     }
+
     void Attack()
     {
         timer = intTimer;
@@ -105,8 +101,6 @@ public class Enemy_Behaviour : MonoBehaviour
         attackMode = false;
         anim.SetBool("Attack", false);
     }
-
-
 
     public void TriggerCooling()
     {
@@ -136,15 +130,18 @@ public class Enemy_Behaviour : MonoBehaviour
 
     public void Flip()
     {
-        Vector3 rotation = transform.eulerAngles;
-        if (transform.position.x > target.position.x)
+        if (target != null)
         {
-            rotation.y = 180f;
+            Vector3 rotation = transform.eulerAngles;
+            if (transform.position.x > target.position.x)
+            {
+                rotation.y = 180f;
+            }
+            else
+            {
+                rotation.y = 0f;
+            }
+            transform.eulerAngles = rotation;
         }
-        else
-        {
-            rotation.y = 0f;
-        }
-        transform.eulerAngles = rotation;
     }
 }

@@ -13,12 +13,20 @@ public class CharacterSwitch : MonoBehaviour
     public float switchDuration = 15f;
     public float switchCooldown = 5f; // Cooldown before switching back to Player 2
     public float switchKeyCooldown = 5f; // Cooldown before pressing X again
+
+    public Image switchCooldownImagePlayer1; // Image representing the cooldown for switching to Player 1
+    public Image switchCooldownImagePlayer2; // Image representing the cooldown for switching to Player 2
+
     private GameObject activePlayer;
     private bool isSwitching = false;
     private bool canSwitchBackToPlayer2 = true;
     private bool canPressSwitchKey = true;
-    private float switchCooldownTimer = 0f;
-    private float switchKeyCooldownTimer = 0f;
+    private float switchCooldownTimer = 5f;
+    private float switchKeyCooldownTimer = f;
+    private PlayerHealth currentHealthScript;
+
+    // Reference to the enemy behavior script
+    public Enemy_Behaviour enemyBehaviour;
 
     void Start()
     {
@@ -29,6 +37,8 @@ public class CharacterSwitch : MonoBehaviour
 
         player1AbilitiesUI.SetActive(true);
         player2AbilitiesUI.SetActive(false);
+
+        currentHealthScript = player1.GetComponent<PlayerHealth>();
     }
 
     void Update()
@@ -36,11 +46,14 @@ public class CharacterSwitch : MonoBehaviour
         if (canPressSwitchKey && Input.GetKeyDown(KeyCode.X) && !isSwitching)
         {
             StartCoroutine(SwitchCharacterTemporarily());
+            switchCooldownTimer = switchCooldown;
+            canPressSwitchKey = false;
         }
 
         if (!canSwitchBackToPlayer2)
         {
             switchCooldownTimer -= Time.deltaTime;
+            UpdateSwitchCooldownImage(); // Update switch cooldown image
             if (switchCooldownTimer <= 0)
             {
                 canSwitchBackToPlayer2 = true;
@@ -55,6 +68,12 @@ public class CharacterSwitch : MonoBehaviour
                 canPressSwitchKey = true;
             }
         }
+
+        // Update cooldown image when player 2 is active
+        if (activePlayer == player2)
+        {
+            switchCooldownImagePlayer2.fillAmount = switchKeyCooldownTimer / switchKeyCooldown;
+        }
     }
 
     IEnumerator SwitchCharacterTemporarily()
@@ -65,7 +84,6 @@ public class CharacterSwitch : MonoBehaviour
             yield return new WaitForSeconds(switchDuration);
             SwitchCharacter(player1);
             canSwitchBackToPlayer2 = false;
-            switchCooldownTimer = switchCooldown;
             canPressSwitchKey = false;
             switchKeyCooldownTimer = switchKeyCooldown;
         }
@@ -98,5 +116,33 @@ public class CharacterSwitch : MonoBehaviour
         }
 
         activePlayer = newActivePlayer;
+        currentHealthScript = activePlayer.GetComponent<PlayerHealth>();
+
+        // Update the enemy's target to the new active player
+        if (enemyBehaviour != null)
+        {
+            enemyBehaviour.target = activePlayer.transform;
+            enemyBehaviour.Flip(); // Ensure the enemy faces the new target
+        }
+    }
+
+    void UpdateSwitchCooldownImage()
+    {
+        if (switchCooldownTimer > 0)
+        {
+            switchCooldownImagePlayer1.fillAmount = switchCooldownTimer / switchCooldown;
+        }
+        else
+        {
+            switchCooldownImagePlayer1.fillAmount = 0f;
+        }
+    }
+
+    public void DamageActivePlayer(int damage)
+    {
+        if (currentHealthScript != null)
+        {
+            currentHealthScript.TakeDamage(damage);
+        }
     }
 }

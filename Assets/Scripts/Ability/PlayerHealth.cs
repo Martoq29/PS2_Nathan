@@ -7,8 +7,6 @@ public class PlayerHealth : MonoBehaviour
     public int maxHealth = 100;
     public int currentHealth;
     public Image healthBar;
-    public float invulnerabilityDuration = 1f; // Durée d'invulnérabilité après avoir été touché
-    private bool isInvulnerable = false; // Indique si le joueur est invulnérable
 
     void Start()
     {
@@ -18,38 +16,26 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if (!isInvulnerable)
+        currentHealth -= damage;
+        currentHealth = Mathf.Max(currentHealth, 0); // Ensure health doesn't drop below 0
+        UpdateHealthBar();
+
+        if (currentHealth <= 0)
         {
-            currentHealth -= damage;
-            currentHealth = Mathf.Max(currentHealth, 0); // Assure que la santé ne descend pas en dessous de 0
-            UpdateHealthBar();
-
-            if (currentHealth <= 0)
-            {
-                Die();
-            }
-
-            StartCoroutine(InvulnerabilityCoroutine());
+            Die();
         }
-    }
-
-    IEnumerator InvulnerabilityCoroutine()
-    {
-        isInvulnerable = true;
-        yield return new WaitForSeconds(invulnerabilityDuration);
-        isInvulnerable = false;
     }
 
     public void Heal(int healAmount)
     {
         currentHealth += healAmount;
-        currentHealth = Mathf.Min(currentHealth, maxHealth); // Assure que la santé ne dépasse pas le maximum
+        currentHealth = Mathf.Min(currentHealth, maxHealth); // Ensure health doesn't exceed the maximum
         UpdateHealthBar();
     }
 
     void Die()
     {
-        // Implémentez la logique de mort du joueur ici
+        // Implement player death logic here
         Debug.Log("Player died!");
         Destroy(gameObject);
     }
