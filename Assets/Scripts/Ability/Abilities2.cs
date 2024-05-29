@@ -12,26 +12,27 @@ public class Abilities2 : MonoBehaviour
     private bool isShootCooldown = false;
     public float bulletLifetime = 3f; // Lifetime of the bullet in seconds
 
-    [Header("Healing Ability")]
-    public KeyCode healKey = KeyCode.E; // Key for healing ability
-    public int healAmount = 30; // Amount of health restored by healing ability
-    public float healCooldown = 5f; // Cooldown for healing ability
-    public Image healImage;
-    private bool isHealCooldown = false;
-
     private Animator animator;
+
+    [Header("Melee Attack Ability")]
+    public KeyCode meleeKey = KeyCode.Q;
+    public float meleeCooldown = 2f;
+    public Image meleeImage;
+    private bool isMeleeCooldown = false;
+    public float meleeRange = 1.5f; // Range of the melee attack
+    public int meleeDamage = 30; // Damage of the melee attack
 
     void Start()
     {
         shootImage.fillAmount = 0;
-        healImage.fillAmount = 0;
+        meleeImage.fillAmount = 0;
         animator = GetComponent<Animator>();
     }
 
     void Update()
     {
         HandleShootingAbility();
-        HandleHealingAbility();
+        HandleMeleeAbility(); // Call HandleMeleeAbility in Update
     }
 
     void HandleShootingAbility()
@@ -60,30 +61,47 @@ public class Abilities2 : MonoBehaviour
         }
     }
 
-    void HandleHealingAbility()
+    void HandleMeleeAbility()
     {
-        if (Input.GetKeyDown(healKey) && !isHealCooldown)
+        if (Input.GetKeyDown(meleeKey) && !isMeleeCooldown)
         {
-            isHealCooldown = true;
-            healImage.fillAmount = 1;
+            isMeleeCooldown = true;
+            meleeImage.fillAmount = 1;
 
-            // Perform healing logic here
-            // For example, you could increase the player's health by healAmount
-            // You need to implement your own health management system
+            // Trigger "Attack" animation
+            animator.SetTrigger("Attack");
 
-            // Start cooldown
-            Invoke("ResetHealCooldown", healCooldown);
+            // Perform melee attack logic here
+            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, meleeRange);
+            foreach (Collider2D enemy in hitEnemies)
+            {
+                if (enemy.CompareTag("Enemy"))
+                {
+                    // Apply damage to the enemy if EnemyHealth component exists
+                    EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
+                    if (enemyHealth != null)
+                    {
+                        enemyHealth.TakeDamage(meleeDamage);
+                    }
+                }
+            }
         }
 
-        if (isHealCooldown)
+        if (isMeleeCooldown)
         {
-            healImage.fillAmount -= 1 / healCooldown * Time.deltaTime;
+            meleeImage.fillAmount -= 1 / meleeCooldown * Time.deltaTime;
+
+            if (meleeImage.fillAmount <= 0)
+            {
+                meleeImage.fillAmount = 0;
+                isMeleeCooldown = false;
+            }
         }
     }
 
-    void ResetHealCooldown()
+    void OnDrawGizmosSelected() // Optional: Visualize melee range in the editor
     {
-        isHealCooldown = false;
-        healImage.fillAmount = 0;
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, meleeRange);
     }
 }

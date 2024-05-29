@@ -39,7 +39,7 @@ public class CharacterSwitch : MonoBehaviour
 
         currentHealthScript = player1.GetComponent<PlayerHealth>();
 
-        // Activer le cooldown dès le début pour le joueur 2
+        // Activate the cooldown image at the start for player 2 if needed
         if (activePlayer == player2)
         {
             UpdateSwitchCooldownImage();
@@ -94,6 +94,12 @@ public class CharacterSwitch : MonoBehaviour
 
     void SwitchCharacter(GameObject newActivePlayer)
     {
+        if (newActivePlayer == null || activePlayer == null)
+        {
+            Debug.LogWarning("Attempted to switch to a null player.");
+            return;
+        }
+
         Vector3 currentPosition = activePlayer.transform.position;
 
         activePlayer.SetActive(false);
