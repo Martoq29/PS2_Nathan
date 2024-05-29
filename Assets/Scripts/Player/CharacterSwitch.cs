@@ -14,15 +14,14 @@ public class CharacterSwitch : MonoBehaviour
     public float switchCooldown = 5f; // Cooldown before switching back to Player 2
     public float switchKeyCooldown = 5f; // Cooldown before pressing X again
 
-    public Image switchCooldownImagePlayer1; // Image representing the cooldown for switching to Player 1
-    public Image switchCooldownImagePlayer2; // Image representing the cooldown for switching to Player 2
+    public Image switchCooldownImage; // Image representing the cooldown for character switch
 
     private GameObject activePlayer;
     private bool isSwitching = false;
     private bool canSwitchBackToPlayer2 = true;
     private bool canPressSwitchKey = true;
     private float switchCooldownTimer = 5f;
-    private float switchKeyCooldownTimer = f;
+    private float switchKeyCooldownTimer = 5f;
     private PlayerHealth currentHealthScript;
 
     // Reference to the enemy behavior script
@@ -39,6 +38,12 @@ public class CharacterSwitch : MonoBehaviour
         player2AbilitiesUI.SetActive(false);
 
         currentHealthScript = player1.GetComponent<PlayerHealth>();
+
+        // Activer le cooldown dès le début pour le joueur 2
+        if (activePlayer == player2)
+        {
+            UpdateSwitchCooldownImage();
+        }
     }
 
     void Update()
@@ -46,8 +51,6 @@ public class CharacterSwitch : MonoBehaviour
         if (canPressSwitchKey && Input.GetKeyDown(KeyCode.X) && !isSwitching)
         {
             StartCoroutine(SwitchCharacterTemporarily());
-            switchCooldownTimer = switchCooldown;
-            canPressSwitchKey = false;
         }
 
         if (!canSwitchBackToPlayer2)
@@ -68,12 +71,6 @@ public class CharacterSwitch : MonoBehaviour
                 canPressSwitchKey = true;
             }
         }
-
-        // Update cooldown image when player 2 is active
-        if (activePlayer == player2)
-        {
-            switchCooldownImagePlayer2.fillAmount = switchKeyCooldownTimer / switchKeyCooldown;
-        }
     }
 
     IEnumerator SwitchCharacterTemporarily()
@@ -84,6 +81,7 @@ public class CharacterSwitch : MonoBehaviour
             yield return new WaitForSeconds(switchDuration);
             SwitchCharacter(player1);
             canSwitchBackToPlayer2 = false;
+            switchCooldownTimer = switchCooldown;
             canPressSwitchKey = false;
             switchKeyCooldownTimer = switchKeyCooldown;
         }
@@ -130,11 +128,11 @@ public class CharacterSwitch : MonoBehaviour
     {
         if (switchCooldownTimer > 0)
         {
-            switchCooldownImagePlayer1.fillAmount = switchCooldownTimer / switchCooldown;
+            switchCooldownImage.fillAmount = switchCooldownTimer / switchCooldown;
         }
         else
         {
-            switchCooldownImagePlayer1.fillAmount = 0f;
+            switchCooldownImage.fillAmount = 0f;
         }
     }
 

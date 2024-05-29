@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +7,9 @@ public class PlayerHealth : MonoBehaviour
     public int maxHealth = 100;
     public int currentHealth;
     public Image healthBar;
+
+    // Créez un événement pour informer les observers du changement de santé du joueur
+    public static event Action<PlayerHealth> OnHealthChanged;
 
     void Start()
     {
@@ -46,5 +49,8 @@ public class PlayerHealth : MonoBehaviour
         {
             healthBar.fillAmount = Mathf.Clamp01((float)currentHealth / maxHealth);
         }
+
+        // Informe les observers du changement de santé du joueur
+        OnHealthChanged?.Invoke(this);
     }
 }

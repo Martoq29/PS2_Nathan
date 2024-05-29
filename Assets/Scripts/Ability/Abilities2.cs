@@ -12,25 +12,26 @@ public class Abilities2 : MonoBehaviour
     private bool isShootCooldown = false;
     public float bulletLifetime = 3f; // Lifetime of the bullet in seconds
 
-    private Animator animator;
-
-    [Header("Heal Ability")] // New variables for Heal Ability
-    public KeyCode healKey = KeyCode.Q;
-    public int healAmount = 20;
-    public float healCooldown = 10f;
+    [Header("Healing Ability")]
+    public KeyCode healKey = KeyCode.E; // Key for healing ability
+    public int healAmount = 30; // Amount of health restored by healing ability
+    public float healCooldown = 5f; // Cooldown for healing ability
     public Image healImage;
     private bool isHealCooldown = false;
+
+    private Animator animator;
 
     void Start()
     {
         shootImage.fillAmount = 0;
+        healImage.fillAmount = 0;
         animator = GetComponent<Animator>();
     }
 
     void Update()
     {
         HandleShootingAbility();
-        HandleHealAbility(); // Call HandleHealAbility in Update
+        HandleHealingAbility();
     }
 
     void HandleShootingAbility()
@@ -40,7 +41,7 @@ public class Abilities2 : MonoBehaviour
             isShootCooldown = true;
             shootImage.fillAmount = 1;
 
-            // Trigger "Attack2" animation
+            // Trigger "Attack" animation
             animator.SetTrigger("Attack");
 
             GameObject bullet = Instantiate(bulletPrefab, shootingPoint.position, shootingPoint.rotation);
@@ -59,26 +60,30 @@ public class Abilities2 : MonoBehaviour
         }
     }
 
-    void HandleHealAbility() // New method for Heal Ability
+    void HandleHealingAbility()
     {
         if (Input.GetKeyDown(healKey) && !isHealCooldown)
         {
             isHealCooldown = true;
             healImage.fillAmount = 1;
 
-            // Handle healing logic here
-            // Example: playerHealth.Heal(healAmount);
+            // Perform healing logic here
+            // For example, you could increase the player's health by healAmount
+            // You need to implement your own health management system
+
+            // Start cooldown
+            Invoke("ResetHealCooldown", healCooldown);
         }
 
         if (isHealCooldown)
         {
             healImage.fillAmount -= 1 / healCooldown * Time.deltaTime;
-
-            if (healImage.fillAmount <= 0)
-            {
-                healImage.fillAmount = 0;
-                isHealCooldown = false;
-            }
         }
+    }
+
+    void ResetHealCooldown()
+    {
+        isHealCooldown = false;
+        healImage.fillAmount = 0;
     }
 }
