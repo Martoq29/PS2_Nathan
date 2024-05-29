@@ -35,13 +35,13 @@ public class Enemy_Behaviour : MonoBehaviour
             Move();
         }
 
-        if(!InsideofLimits() && !inRange && !anim.GetCurrentAnimatorStateInfo(0).IsName("Enemy_Attack"))
+        if (!InsideofLimits() && !inRange && !anim.GetCurrentAnimatorStateInfo(0).IsName("Enemy_Attack"))
         {
             SelectTarget();
         }
 
 
-        if(inRange)
+        if (inRange)
         {
             EnemyLogic();
         }
@@ -53,11 +53,11 @@ public class Enemy_Behaviour : MonoBehaviour
     {
         distance = Vector2.Distance(transform.position, target.position);
 
-        if(distance > attackDistance)
+        if (distance > attackDistance)
         {
             StopAttack();
         }
-        else if(attackDistance >= distance && cooling == false)
+        else if (attackDistance >= distance && cooling == false)
         {
             Attack();
         }
@@ -77,7 +77,7 @@ public class Enemy_Behaviour : MonoBehaviour
             transform.position = Vector2.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
         }
 
-        
+
     }
     void Attack()
     {
@@ -92,7 +92,7 @@ public class Enemy_Behaviour : MonoBehaviour
     {
         timer -= Time.deltaTime;
 
-        if(timer <= 0 && cooling && attackMode)
+        if (timer <= 0 && cooling && attackMode)
         {
             cooling = false;
             timer = intTimer;
@@ -123,7 +123,7 @@ public class Enemy_Behaviour : MonoBehaviour
         float distanceToLeft = Vector2.Distance(transform.position, leftLimit.position);
         float distanceToRight = Vector2.Distance(transform.position, rightLimit.position);
 
-        if(distanceToLeft > distanceToRight)
+        if (distanceToLeft > distanceToRight)
         {
             target = leftLimit;
         }
@@ -137,7 +137,7 @@ public class Enemy_Behaviour : MonoBehaviour
     public void Flip()
     {
         Vector3 rotation = transform.eulerAngles;
-        if(transform.position.x > target.position.x)
+        if (transform.position.x > target.position.x)
         {
             rotation.y = 180f;
         }

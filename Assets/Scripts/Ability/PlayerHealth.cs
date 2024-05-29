@@ -1,27 +1,43 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public int maxHealth = 100; // Ce ne devrait pas être static
+    public int maxHealth = 100;
     public int currentHealth;
     public Image healthBar;
+    public float invulnerabilityDuration = 1f; // Durée d'invulnérabilité après avoir été touché
+    private bool isInvulnerable = false; // Indique si le joueur est invulnérable
 
     void Start()
     {
         currentHealth = maxHealth;
+        UpdateHealthBar();
     }
 
     public void TakeDamage(int damage)
     {
-        currentHealth -= damage;
-        currentHealth = Mathf.Max(currentHealth, 0); // Assure que la santé ne descend pas en dessous de 0
-        UpdateHealthBar();
-
-        if (currentHealth <= 0)
+        if (!isInvulnerable)
         {
-            Die();
+            currentHealth -= damage;
+            currentHealth = Mathf.Max(currentHealth, 0); // Assure que la santé ne descend pas en dessous de 0
+            UpdateHealthBar();
+
+            if (currentHealth <= 0)
+            {
+                Die();
+            }
+
+            StartCoroutine(InvulnerabilityCoroutine());
         }
+    }
+
+    IEnumerator InvulnerabilityCoroutine()
+    {
+        isInvulnerable = true;
+        yield return new WaitForSeconds(invulnerabilityDuration);
+        isInvulnerable = false;
     }
 
     public void Heal(int healAmount)
@@ -44,11 +60,5 @@ public class PlayerHealth : MonoBehaviour
         {
             healthBar.fillAmount = Mathf.Clamp01((float)currentHealth / maxHealth);
         }
-    }
-
-    void Update()
-    {
-        // Optionnel : Si vous souhaitez mettre à jour la barre de santé chaque frame
-        // UpdateHealthBar();
     }
 }
