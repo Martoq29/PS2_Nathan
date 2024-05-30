@@ -10,18 +10,21 @@ public class Meteor : MonoBehaviour
         transform.Translate(Vector2.down * fallSpeed * Time.deltaTime);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.CompareTag("Player"))
+        int collisionLayer = collision.gameObject.layer;
+        string collisionLayerName = LayerMask.LayerToName(collisionLayer);
+
+        if (collisionLayerName == "Player")
         {
-            PlayerHealth playerHealth = collision.GetComponent<PlayerHealth>();
+            PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
             if (playerHealth != null)
             {
                 playerHealth.TakeDamage(damage);
             }
             Destroy(gameObject); // Destroy meteor on collision with player
         }
-        else if (collision.CompareTag("Ground"))
+        else if (collisionLayerName == "Ground")
         {
             Destroy(gameObject); // Destroy meteor on collision with ground
         }

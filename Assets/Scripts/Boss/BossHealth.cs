@@ -5,44 +5,54 @@ public class BossHealth : MonoBehaviour
 {
     public int maxHealth = 200;
     public int currentHealth;
-
-    private bool meteorPhaseActivated = false;
-    public GameObject bossFightController; // Reference to the BossFightController GameObject
+    public GameObject meteorPrefab;
+    public Transform[] spawnPoints;
+    public float spawnRate = 1f; // Time between meteor spawns in seconds
+    private bool isMeteorActive = false;
 
     void Start()
     {
         currentHealth = maxHealth;
-        bossFightController.SetActive(false); // Disable meteor spawning initially
     }
 
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
-        currentHealth = Mathf.Max(currentHealth, 0); // Ensure health doesn't drop below 0
-
-        if (currentHealth <= maxHealth / 2 && !meteorPhaseActivated)
+        if (currentHealth <= maxHealth / 2 && !isMeteorActive)
         {
-            meteorPhaseActivated = true;
-            StartCoroutine(ActivateMeteorPhase());
+            StartCoroutine(ActivateMeteors());
         }
-
         if (currentHealth <= 0)
         {
             Die();
         }
     }
 
-    private void Die()
+    private IEnumerator ActivateMeteors()
+    {
+        isMeteorActive = true;
+        float endTime = Time.time + 10f; // Meteors active for 10 seconds
+
+        while (Time.time < endTime)
+        {
+            SpawnMeteor();
+            yield return new WaitForSeconds(spawnRate);
+        }
+
+        isMeteorActive = false;
+    }
+
+    private void SpawnMeteor()
+    {
+        int randomIndex = Random.Range(0, spawnPoints.Length);
+        Transform spawnPoint = spawnPoints[randomIndex];
+        Instantiate(meteorPrefab, spawnPoint.position, spawnPoint.rotation);
+    }
+
+    void Die()
     {
         // Implement boss death logic here
         Debug.Log("Boss died!");
         Destroy(gameObject);
-    }
-
-    private IEnumerator ActivateMeteorPhase()
-    {
-        bossFightController.SetActive(true); // Activate meteor spawning
-        yield return new WaitForSeconds(10f);
-        bossFightController.SetActive(false); // Deactivate meteor spawning
     }
 }

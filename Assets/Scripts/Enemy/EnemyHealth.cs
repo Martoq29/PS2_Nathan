@@ -1,9 +1,10 @@
+using System.Collections;
 using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
     public int maxHealth = 100;
-    private int currentHealth;
+    public int currentHealth;
 
     void Start()
     {
@@ -19,6 +20,8 @@ public class EnemyHealth : MonoBehaviour
             Die();
         }
     }
+
+    // Méthode pour guérir l'ennemi
 
     // Méthode pour gérer la mort de l'ennemi
     void Die()

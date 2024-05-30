@@ -16,22 +16,25 @@ public class Bullet2 : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        EnemyHealth enemyHealth = collision.gameObject.GetComponent<EnemyHealth>();
-        if (enemyHealth != null)
+        if (collision.gameObject.CompareTag("Enemy"))
         {
-            // Inflige des dégâts à l'ennemi
-            enemyHealth.TakeDamage(damage);
-
-            // Applique le knockback
-            Rigidbody2D enemyRigidbody = collision.gameObject.GetComponent<Rigidbody2D>();
-            if (enemyRigidbody != null)
+            EnemyHealth enemyHealth = collision.gameObject.GetComponent<EnemyHealth>();
+            if (enemyHealth != null)
             {
-                Vector2 knockbackDirection = (collision.transform.position - transform.position).normalized;
-                enemyRigidbody.AddForce(knockbackDirection * knockbackForce, ForceMode2D.Impulse);
-            }
+                // Inflige des dégâts à l'ennemi
+                enemyHealth.TakeDamage(damage);
 
-            // Détruire la balle après avoir touché l'ennemi
-            Destroy(gameObject);
+                // Applique le knockback
+                Rigidbody2D enemyRigidbody = collision.gameObject.GetComponent<Rigidbody2D>();
+                if (enemyRigidbody != null)
+                {
+                    Vector2 knockbackDirection = (collision.transform.position - transform.position).normalized;
+                    enemyRigidbody.AddForce(knockbackDirection * knockbackForce, ForceMode2D.Impulse);
+                }
+
+                // Détruire la balle après avoir touché l'ennemi
+                Destroy(gameObject);
+            }
         }
     }
 }

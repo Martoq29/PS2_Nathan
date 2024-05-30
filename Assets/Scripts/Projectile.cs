@@ -1,45 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    public float speed;
     public int damage = 10;
+    public float bulletSpeed = 10f; // Nouvelle variable pour la vitesse de la balle
 
-    private Transform player;
-    private Vector2 target;
+    private Rigidbody2D rb;
 
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
-        target = new Vector2(player.position.x, player.position.y);
+        rb = GetComponent<Rigidbody2D>();
+        rb.velocity = transform.right * bulletSpeed; // Définir la vélocité de la balle
     }
 
-    void Update()
+    void OnCollisionEnter2D(Collision2D collision)
     {
-        transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
-        if (Vector2.Distance(transform.position, target) < 0.1f)
+        if (collision.gameObject.CompareTag("Enemy"))
         {
-            DestroyProjectile();
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
-            if (playerHealth != null)
+            EnemyHealth enemyHealth = collision.gameObject.GetComponent<EnemyHealth>();
+            if (enemyHealth != null)
             {
-                playerHealth.TakeDamage(damage);
-            }
-            DestroyProjectile();
-        }
-    }
+                // Inflige des dégâts à l'ennemi
+                enemyHealth.TakeDamage(damage);
 
-    void DestroyProjectile()
-    {
-        Destroy(gameObject);
+                // Détruire la balle après avoir touché l'ennemi
+                Destroy(gameObject);
+            }
+        }
     }
 }
