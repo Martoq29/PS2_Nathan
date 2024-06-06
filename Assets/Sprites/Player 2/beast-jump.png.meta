@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 39fe6e68f4338ac4bbef24e4d138f07e
+guid: 602ecac62cd46514d85ffb29cbfeef35
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -69,10 +69,10 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 2
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: idle 2_0
+      name: beast-jump_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 160
-        height: 104
+        width: 1417
+        height: 1417
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -111,20 +111,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e278335f33056734a8089c75a9b686bd
-      internalID: -2102781131
+      spriteID: 8d484cab0b43e6b4390a50ff9a103158
+      internalID: 830408150
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: idle 2_1
+      name: beast-jump_1
       rect:
         serializedVersion: 2
-        x: 160
+        x: 1417
         y: 0
-        width: 160
-        height: 104
+        width: 1417
+        height: 1417
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -132,20 +132,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 398f3bb13c2835b49bdf54f013c6b8e5
-      internalID: -1378060088
+      spriteID: 1dc59fff40e82f449b88e3993945376c
+      internalID: -983916321
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: idle 2_2
+      name: beast-jump_2
       rect:
         serializedVersion: 2
-        x: 320
+        x: 2834
         y: 0
-        width: 160
-        height: 104
+        width: 1417
+        height: 1417
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -153,71 +153,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 50b7af685f9ca814984cf50d2d896194
-      internalID: 1110681627
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: idle 2_3
-      rect:
-        serializedVersion: 2
-        x: 480
-        y: 0
-        width: 160
-        height: 104
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 28223fb4ba508444dbeca3437c5d8331
-      internalID: -578086009
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: idle 2_4
-      rect:
-        serializedVersion: 2
-        x: 640
-        y: 0
-        width: 160
-        height: 104
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 789f8af7e9f4f4447910cdaa69c16ed5
-      internalID: 916115848
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: idle 2_5
-      rect:
-        serializedVersion: 2
-        x: 800
-        y: 0
-        width: 160
-        height: 104
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5b606a5c6d4b52646be73ad42f326b53
-      internalID: 1211595995
+      spriteID: bd17bd7f40d8d2e4bb37885978baeb26
+      internalID: -1829922797
       vertices: []
       indices: 
       edges: []
@@ -233,12 +170,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      idle 2_0: -2102781131
-      idle 2_1: -1378060088
-      idle 2_2: 1110681627
-      idle 2_3: -578086009
-      idle 2_4: 916115848
-      idle 2_5: 1211595995
+      beast-jump_0: 830408150
+      beast-jump_1: -983916321
+      beast-jump_2: -1829922797
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

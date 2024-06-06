@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 6443c2908e7673d4b96b458fbc52ccc8
+guid: 9fe35e32b0ed14b42b6539e880d228e9
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -69,10 +69,10 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 2
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Idle_0
+      name: beast-run_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 192
-        height: 192
+        width: 1417
+        height: 1417
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -111,20 +111,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ef3767fe246b592448d6c32ea0b1784d
-      internalID: -587455334
+      spriteID: 8fb244eeffdc3de44ae2b294f6cf9985
+      internalID: 2104461180
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle_1
+      name: beast-run_1
       rect:
         serializedVersion: 2
-        x: 192
+        x: 1417
         y: 0
-        width: 192
-        height: 192
+        width: 1417
+        height: 1417
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -132,20 +132,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bcb096f4690cb7b43be1abf8df47ced7
-      internalID: -461605949
+      spriteID: 8b1a32eec799b0e4c8ab13311e50df38
+      internalID: 606390681
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle_2
+      name: beast-run_2
       rect:
         serializedVersion: 2
-        x: 384
+        x: 2834
         y: 0
-        width: 192
-        height: 192
+        width: 1417
+        height: 1417
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -153,20 +153,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f32203301a6286842b35f009349a2e40
-      internalID: 216820283
+      spriteID: c07ff284001c175429a7f222a6600730
+      internalID: 761952268
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle_3
+      name: beast-run_3
       rect:
         serializedVersion: 2
-        x: 576
+        x: 4251
         y: 0
-        width: 192
-        height: 192
+        width: 1417
+        height: 1417
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -174,20 +174,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ef81e8eb62a3bff4abfae035e108837b
-      internalID: 868276268
+      spriteID: 40482bd972d213247a69579a4a68a299
+      internalID: 2101546548
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle_4
+      name: beast-run_4
       rect:
         serializedVersion: 2
-        x: 768
+        x: 5668
         y: 0
-        width: 192
-        height: 192
+        width: 1417
+        height: 1417
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -195,20 +195,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d12efcd2ece625f45b305e360eb96a1a
-      internalID: -1578470394
+      spriteID: 948de35d82ae79545962185ce401aba7
+      internalID: -384825294
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle_5
+      name: beast-run_5
       rect:
         serializedVersion: 2
-        x: 960
+        x: 7085
         y: 0
-        width: 192
-        height: 192
+        width: 1417
+        height: 1417
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -216,20 +216,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 38401fec405ec7e4f8a31e0c568a6a02
-      internalID: -165550003
+      spriteID: bf8eecc6ef7c4ad42a9a13ca670719ae
+      internalID: 2035832533
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle_6
+      name: beast-run_6
       rect:
         serializedVersion: 2
-        x: 1152
+        x: 8502
         y: 0
-        width: 192
-        height: 192
+        width: 1417
+        height: 1417
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -237,20 +237,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 240084277e7c8584bbe2a65ca72bbd15
-      internalID: -1105431232
+      spriteID: 0f6bce693b645f745ab4e4fdc9033a24
+      internalID: 1245310214
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle_7
+      name: beast-run_7
       rect:
         serializedVersion: 2
-        x: 1344
+        x: 9919
         y: 0
-        width: 192
-        height: 192
+        width: 1417
+        height: 1417
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -258,20 +258,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3b6ea4d82c3c5614b9b7c4788a176710
-      internalID: 904493930
+      spriteID: 48945ff33545feb4e83335a58ee2cf2d
+      internalID: -1867685287
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle_8
+      name: beast-run_8
       rect:
         serializedVersion: 2
-        x: 1536
+        x: 11336
         y: 0
-        width: 192
-        height: 192
+        width: 1417
+        height: 1417
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -279,29 +279,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c5d14de4e2da9d74c9f734f0c6556a9b
-      internalID: -1245587422
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Idle_9
-      rect:
-        serializedVersion: 2
-        x: 1728
-        y: 0
-        width: 192
-        height: 192
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bde934f9a681e2d469d3edf73ea851b1
-      internalID: -1817666984
+      spriteID: 7d3fb44c6ea81164caa7fbadc8caa2d0
+      internalID: 2016732493
       vertices: []
       indices: 
       edges: []
@@ -317,16 +296,15 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Idle_0: -587455334
-      Idle_1: -461605949
-      Idle_2: 216820283
-      Idle_3: 868276268
-      Idle_4: -1578470394
-      Idle_5: -165550003
-      Idle_6: -1105431232
-      Idle_7: 904493930
-      Idle_8: -1245587422
-      Idle_9: -1817666984
+      beast-run_0: 2104461180
+      beast-run_1: 606390681
+      beast-run_2: 761952268
+      beast-run_3: 2101546548
+      beast-run_4: -384825294
+      beast-run_5: 2035832533
+      beast-run_6: 1245310214
+      beast-run_7: -1867685287
+      beast-run_8: 2016732493
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
