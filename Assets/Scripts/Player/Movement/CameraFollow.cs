@@ -10,7 +10,7 @@ public class CameraFollow : MonoBehaviour
     {
         if (target != null)
         {
-            Vector3 newPos = new Vector3(target.position.x, target.position.y + yOffset, -10);
+            Vector3 newPos = new Vector3(target.position.x, target.position.y + yOffset, transform.position.z);
             transform.position = Vector3.Slerp(transform.position, newPos, FollowSpeed * Time.deltaTime);
         }
     }

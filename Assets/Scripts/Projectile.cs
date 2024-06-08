@@ -2,30 +2,38 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    public int damage = 10;
-    public float bulletSpeed = 10f; // Nouvelle variable pour la vitesse de la balle
+    [SerializeField] private float destroyTime = 3f;
+    [SerializeField] private float bulletSpeed = 10f; // Vitesse du projectile
+    [SerializeField] private int bulletDamage = 10; // Dégâts infligés par le projectile
 
     private Rigidbody2D rb;
 
-    void Start()
+    private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        rb.velocity = transform.right * bulletSpeed; // Définir la vélocité de la balle
+
+        // Configure la destruction du projectile après un certain délai
+        Destroy(gameObject, destroyTime);
+
+        // Applique une vélocité au projectile dans sa direction
+        rb.velocity = transform.right * bulletSpeed;
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        // Vérifie si le projectile entre en collision avec un ennemi
+        if (other.CompareTag("Enemy"))
         {
-            EnemyHealth enemyHealth = collision.gameObject.GetComponent<EnemyHealth>();
+            // Obtient le composant de santé de l'ennemi touché
+            EnemyHealth enemyHealth = other.GetComponent<EnemyHealth>();
             if (enemyHealth != null)
             {
                 // Inflige des dégâts à l'ennemi
-                enemyHealth.TakeDamage(damage);
-
-                // Détruire la balle après avoir touché l'ennemi
-                Destroy(gameObject);
+                enemyHealth.TakeDamage(bulletDamage);
             }
+
+            // Détruit le projectile lorsqu'il touche un ennemi
+            Destroy(gameObject);
         }
     }
 }

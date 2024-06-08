@@ -75,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 50
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -121,7 +121,7 @@ CapsuleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.5, y: 1}
-  m_Direction: 0
+  m_Direction: 1
 --- !u!50 &-2539392181490069128
 Rigidbody2D:
   serializedVersion: 4
@@ -161,3 +161,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fb1c82483fe86545bfc35fa1b1d43ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyTime: 3
+  normalBulletSpeed: 10
+  normalBulletDamage: 1

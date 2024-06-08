@@ -1,4 +1,7 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class Abilities : MonoBehaviour
@@ -12,19 +15,38 @@ public class Abilities : MonoBehaviour
 
     [Header("Shoot Ability")]
     public KeyCode shootKey = KeyCode.Mouse0;
-    public GameObject bullet;
+    public GameObject bulletPrefab;
     public Transform bulletSpawnPoint;
     public float shootCooldown = 5f;
     public Image shootImage;
     private bool isShootCooldown = false;
+
+    [Header("Gun Settings")]
+    [SerializeField] private GameObject gun;
+
+    private Vector2 worldPosition;
+    private Vector2 direction;
+    private float angle;
 
     [Header("Player Status")]
     public bool isPlayer2 = false;
     private PlayerHealth playerHealth;
     private Animator animator;
 
+    private static Abilities instance;
+
     void Start()
     {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+
         healImage.fillAmount = 0;
         shootImage.fillAmount = 0;
         playerHealth = GetComponent<PlayerHealth>();
@@ -33,8 +55,30 @@ public class Abilities : MonoBehaviour
 
     void Update()
     {
+        HandleGunRotation();
         HandleHealAbility();
         HandleShootAbility();
+        HandleGunRotation(); // Ajoutez cette ligne ici pour appeler HandleGunRotation dans la fonction Update
+    }
+
+    private void HandleGunRotation()
+    {
+        worldPosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        direction = (worldPosition - (Vector2)gun.transform.position).normalized;
+        gun.transform.right = direction;
+
+        angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        Vector3 localScale = new Vector3(1f, 1f, 1f);
+        if (angle > 90 || angle < -90)
+        {
+            localScale.y = -1f;
+        }
+        else
+        {
+            localScale.y = 1f;
+        }
+        gun.transform.localScale = localScale;
     }
 
     void HandleHealAbility()
@@ -69,7 +113,7 @@ public class Abilities : MonoBehaviour
             // Play attack animation
             animator.SetTrigger("Attack");
 
-            Instantiate(bullet, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+            Instantiate(bulletPrefab, bulletSpawnPoint.position, gun.transform.rotation);
         }
 
         if (isShootCooldown)

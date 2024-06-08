@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -69,10 +69,10 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 2
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -95,7 +95,238 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: beast-atk_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1417
+        height: 1417
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2662ee373be36e640942c96855d3c732
+      internalID: 1354530484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beast-atk_1
+      rect:
+        serializedVersion: 2
+        x: 1417
+        y: 0
+        width: 1417
+        height: 1417
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 95a05c6425704174d9b8b0c37f28d56a
+      internalID: -1167475191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beast-atk_2
+      rect:
+        serializedVersion: 2
+        x: 2834
+        y: 0
+        width: 1417
+        height: 1417
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6022e5cd7a74043489136bff23c0465e
+      internalID: -257460773
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beast-atk_3
+      rect:
+        serializedVersion: 2
+        x: 4251
+        y: 0
+        width: 1417
+        height: 1417
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7c23cfeb1ec4aa4d81d6710f4dbb0b8
+      internalID: 2007562615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beast-atk_4
+      rect:
+        serializedVersion: 2
+        x: 5668
+        y: 0
+        width: 1417
+        height: 1417
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2cdd77683bfca44696770c9c322ab96
+      internalID: 837099526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beast-atk_5
+      rect:
+        serializedVersion: 2
+        x: 7085
+        y: 0
+        width: 1417
+        height: 1417
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 70a22cc80623b284e9650b5dfb65d989
+      internalID: -54262318
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beast-atk_6
+      rect:
+        serializedVersion: 2
+        x: 8502
+        y: 0
+        width: 1417
+        height: 1417
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4bc83c6957d1aca4ba3fe865259519e0
+      internalID: -1841779988
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beast-atk_7
+      rect:
+        serializedVersion: 2
+        x: 9919
+        y: 0
+        width: 1417
+        height: 1417
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 30bd9090f17c7aa44a773f2f66431989
+      internalID: 56303786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beast-atk_8
+      rect:
+        serializedVersion: 2
+        x: 11336
+        y: 0
+        width: 1417
+        height: 1417
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8002cb64c53e5004abfae64865faab40
+      internalID: -285813296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beast-atk_9
+      rect:
+        serializedVersion: 2
+        x: 12753
+        y: 0
+        width: 1417
+        height: 1417
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf9ba8afa1d66ee4fb2dfc5db63ebf82
+      internalID: 1985971501
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: beast-atk_10
+      rect:
+        serializedVersion: 2
+        x: 14170
+        y: 0
+        width: 1417
+        height: 1417
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 06ea5a09c1caba840bbf67442a469113
+      internalID: 938182638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -106,7 +337,18 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      beast-atk_0: 1354530484
+      beast-atk_1: -1167475191
+      beast-atk_10: 938182638
+      beast-atk_2: -257460773
+      beast-atk_3: 2007562615
+      beast-atk_4: 837099526
+      beast-atk_5: -54262318
+      beast-atk_6: -1841779988
+      beast-atk_7: 56303786
+      beast-atk_8: -285813296
+      beast-atk_9: 1985971501
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

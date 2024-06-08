@@ -3,7 +3,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     [SerializeField] private float destroyTime = 3f;
-    [SerializeField] private float normalBulletSpeed = 10f; // Ajout de la vitesse de la balle
+    [SerializeField] private float normalBulletSpeed = 10f;
     [SerializeField] private float normalBulletDamage = 1f;
 
     private Rigidbody2D rb;
@@ -14,26 +14,22 @@ public class Bullet : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
 
         SetDestroyTime();
+        damage = normalBulletDamage;
+    }
 
-        SetStraightVelocity();
-
-        damage = normalBulletDamage; // Initialisation de la variable damage
+    public void SetStraightVelocity(Vector2 direction)
+    {
+        rb.velocity = direction * normalBulletSpeed;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Vérifie si la collision se produit avec un objet portant le tag "Enemy"
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            
+            // Logique de dégâts ici si nécessaire
 
             Destroy(gameObject);
         }
-    }
-
-    private void SetStraightVelocity()
-    {
-        rb.velocity = transform.right * normalBulletSpeed;
     }
 
     private void SetDestroyTime()

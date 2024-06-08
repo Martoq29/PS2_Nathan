@@ -1,4 +1,4 @@
-using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,8 +8,8 @@ public class PlayerHealth : MonoBehaviour
     public int currentHealth;
     public Image healthBar;
 
-    // Créez un événement pour informer les observers du changement de santé du joueur
-    public static event Action<PlayerHealth> OnHealthChanged;
+    private bool isInvincible = false;
+    private float invincibilityDuration = 1f;
 
     void Start()
     {
@@ -19,14 +19,27 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        if (isInvincible) return;
+
         currentHealth -= damage;
         currentHealth = Mathf.Max(currentHealth, 0); // Ensure health doesn't drop below 0
         UpdateHealthBar();
+
+        Debug.Log($"{gameObject.name} took damage. Current health: {currentHealth}");
 
         if (currentHealth <= 0)
         {
             Die();
         }
+
+        StartCoroutine(InvincibilityCoroutine());
+    }
+
+    private IEnumerator InvincibilityCoroutine()
+    {
+        isInvincible = true;
+        yield return new WaitForSeconds(invincibilityDuration);
+        isInvincible = false;
     }
 
     public void Heal(int healAmount)
@@ -39,7 +52,7 @@ public class PlayerHealth : MonoBehaviour
     void Die()
     {
         // Implement player death logic here
-        Debug.Log("Player died!");
+        Debug.Log($"{gameObject.name} died!");
         Destroy(gameObject);
     }
 
@@ -49,8 +62,5 @@ public class PlayerHealth : MonoBehaviour
         {
             healthBar.fillAmount = Mathf.Clamp01((float)currentHealth / maxHealth);
         }
-
-        // Informe les observers du changement de santé du joueur
-        OnHealthChanged?.Invoke(this);
     }
 }

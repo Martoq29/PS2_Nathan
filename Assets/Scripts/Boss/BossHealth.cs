@@ -1,52 +1,35 @@
-using System.Collections;
 using UnityEngine;
 
 public class BossHealth : MonoBehaviour
 {
     public int maxHealth = 200;
     public int currentHealth;
-    public GameObject meteorPrefab;
-    public Transform[] spawnPoints;
-    public float spawnRate = 1f; // Time between meteor spawns in seconds
-    private bool isMeteorActive = false;
+    public GameObject bossFightObject; // Référence au GameObject contenant le script BossFight
+    private BossFight bossFightScript; // Référence au script BossFight
 
     void Start()
     {
         currentHealth = maxHealth;
+        bossFightScript = bossFightObject.GetComponent<BossFight>(); // Obtient une référence au script BossFight
+    }
+
+    void Update()
+    {
+        // Vérifie si le boss a 100 points de vie ou moins et que le script BossFight n'est pas encore activé
+        if (currentHealth <= 100 && !bossFightScript.enabled)
+        {
+            // Active le script BossFight
+            bossFightScript.enabled = true;
+        }
     }
 
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
-        if (currentHealth <= maxHealth / 2 && !isMeteorActive)
-        {
-            StartCoroutine(ActivateMeteors());
-        }
         if (currentHealth <= 0)
         {
             Die();
         }
-    }
-
-    private IEnumerator ActivateMeteors()
-    {
-        isMeteorActive = true;
-        float endTime = Time.time + 10f; // Meteors active for 10 seconds
-
-        while (Time.time < endTime)
-        {
-            SpawnMeteor();
-            yield return new WaitForSeconds(spawnRate);
-        }
-
-        isMeteorActive = false;
-    }
-
-    private void SpawnMeteor()
-    {
-        int randomIndex = Random.Range(0, spawnPoints.Length);
-        Transform spawnPoint = spawnPoints[randomIndex];
-        Instantiate(meteorPrefab, spawnPoint.position, spawnPoint.rotation);
     }
 
     void Die()

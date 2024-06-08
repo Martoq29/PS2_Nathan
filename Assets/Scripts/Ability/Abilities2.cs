@@ -3,105 +3,88 @@ using UnityEngine.UI;
 
 public class Abilities2 : MonoBehaviour
 {
-    [Header("Shooting Ability")]
-    public Transform shootingPoint;
-    public GameObject bulletPrefab;
-    public KeyCode shootKey = KeyCode.Mouse0;  // Left mouse button
-    public float shootCooldown = 1f;
-    public Image shootImage;
-    private bool isShootCooldown = false;
-    public float bulletLifetime = 3f; // Lifetime of the bullet in seconds
+    [Header("Shooting Ability 1")]
+    public Transform shootingPoint1;
+    public GameObject bulletPrefab1;
+    public KeyCode shootKey1 = KeyCode.Mouse0;  // Left mouse button
+    public float shootCooldown1 = 1f;
+    public Image shootImage1;
+    private bool isShootCooldown1 = false;
+    public float bulletLifetime1 = 3f; // Lifetime of the bullet in seconds
+
+    [Header("Shooting Ability 2")]
+    public Transform shootingPoint2;
+    public GameObject bulletPrefab2;
+    public KeyCode shootKey2 = KeyCode.Mouse1;  // Right mouse button
+    public float shootCooldown2 = 2f;
+    public Image shootImage2;
+    private bool isShootCooldown2 = false;
+    public float bulletLifetime2 = 3f; // Lifetime of the bullet in seconds
 
     private Animator animator;
 
-    [Header("Melee Attack Ability")]
-    public KeyCode meleeKey = KeyCode.Q;
-    public float meleeCooldown = 2f;
-    public Image meleeImage;
-    private bool isMeleeCooldown = false;
-    public float meleeRange = 1.5f; // Range of the melee attack
-    public int meleeDamage = 30; // Damage of the melee attack
-
     void Start()
     {
-        shootImage.fillAmount = 0;
-        meleeImage.fillAmount = 0;
+        shootImage1.fillAmount = 0;
+        shootImage2.fillAmount = 0;
         animator = GetComponent<Animator>();
     }
 
     void Update()
     {
-        HandleShootingAbility();
-        HandleMeleeAbility(); // Call HandleMeleeAbility in Update
+        HandleShootingAbility1();
+        HandleShootingAbility2();
     }
 
-    void HandleShootingAbility()
+    void HandleShootingAbility1()
     {
-        if (Input.GetKeyDown(shootKey) && !isShootCooldown)
+        if (Input.GetKeyDown(shootKey1) && !isShootCooldown1)
         {
-            isShootCooldown = true;
-            shootImage.fillAmount = 1;
+            isShootCooldown1 = true;
+            shootImage1.fillAmount = 1;
 
             // Trigger "Attack" animation
             animator.SetTrigger("Attack");
 
-            GameObject bullet = Instantiate(bulletPrefab, shootingPoint.position, shootingPoint.rotation);
-            Destroy(bullet, bulletLifetime); // Destroy the bullet after bulletLifetime seconds
+            GameObject bullet = Instantiate(bulletPrefab1, shootingPoint1.position, shootingPoint1.rotation);
+            Destroy(bullet, bulletLifetime1); // Destroy the bullet after bulletLifetime1 seconds
         }
 
-        if (isShootCooldown)
+        if (isShootCooldown1)
         {
-            shootImage.fillAmount -= 1 / shootCooldown * Time.deltaTime;
+            shootImage1.fillAmount -= 1 / shootCooldown1 * Time.deltaTime;
 
-            if (shootImage.fillAmount <= 0)
+            if (shootImage1.fillAmount <= 0)
             {
-                shootImage.fillAmount = 0;
-                isShootCooldown = false;
+                shootImage1.fillAmount = 0;
+                isShootCooldown1 = false;
             }
         }
     }
 
-    void HandleMeleeAbility()
+    void HandleShootingAbility2()
     {
-        if (Input.GetKeyDown(meleeKey) && !isMeleeCooldown)
+        if (Input.GetKeyDown(shootKey2) && !isShootCooldown2)
         {
-            isMeleeCooldown = true;
-            meleeImage.fillAmount = 1;
+            isShootCooldown2 = true;
+            shootImage2.fillAmount = 1;
 
             // Trigger "Attack" animation
             animator.SetTrigger("Attack");
 
-            // Perform melee attack logic here
-            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, meleeRange);
-            foreach (Collider2D enemy in hitEnemies)
-            {
-                if (enemy.CompareTag("Enemy"))
-                {
-                    // Apply damage to the enemy if EnemyHealth component exists
-                    EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
-                    if (enemyHealth != null)
-                    {
-                        enemyHealth.TakeDamage(meleeDamage);
-                    }
-                }
-            }
+            GameObject bullet = Instantiate(bulletPrefab2, shootingPoint2.position, shootingPoint2.rotation);
+            Destroy(bullet, bulletLifetime2); // Destroy the bullet after bulletLifetime2 seconds
         }
 
-        if (isMeleeCooldown)
+        if (isShootCooldown2)
         {
-            meleeImage.fillAmount -= 1 / meleeCooldown * Time.deltaTime;
+            shootImage2.fillAmount -= 1 / shootCooldown2 * Time.deltaTime;
 
-            if (meleeImage.fillAmount <= 0)
+            if (shootImage2.fillAmount <= 0)
             {
-                meleeImage.fillAmount = 0;
-                isMeleeCooldown = false;
+                shootImage2.fillAmount = 0;
+                isShootCooldown2 = false;
             }
         }
-    }
-
-    void OnDrawGizmosSelected() // Optional: Visualize melee range in the editor
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, meleeRange);
     }
 }
